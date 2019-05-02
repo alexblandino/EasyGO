@@ -1,49 +1,97 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image, ImageBackground, Dimensions, TouchableOpacity} from 'react-native';
+import { SafeAreaView } from 'react-navigation';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
 
-type Props = {};
-export default class App extends Component<Props> {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
-    );
-  }
+const { width } = Dimensions.get('window');
+
+
+export default class App extends Component{
+
+	constructor(props){
+		super(props);
+		this._renderButton = this._renderButton.bind(this);
+	}
+
+	_renderButton(text, backgroundColor){
+		return(
+			<TouchableOpacity style={[styles.button, { backgroundColor: backgroundColor }]}>
+				<Text style={styles.buttonText}>{text}</Text>
+			</TouchableOpacity>
+		);
+	}
+
+	render(){
+		return(
+			<SafeAreaView style={styles.container}>
+				<View style={{ flex: 8 }}>
+					<ImageBackground  source={require('./assets/images/background-welcome.png')} style={styles.background}>
+						<View style={styles.backgroundContainer}>
+							<Image source={require('./assets/images/logo.png')} style={styles.backgroundImage} />
+						</View>
+					</ImageBackground>
+				</View>
+				<View style={{ flex: 3, alignItems: 'center' }}>
+					{this._renderButton('Connect with Facebook', '#055EEE')}
+					{this._renderButton('Connect with Phone', '#5856D6')}
+					{this._renderButton('Log In', '#FF2D55')}
+				</View>
+				<View style={styles.footerContainer}>
+					<TouchableOpacity>
+						<Text style={styles.signup}>
+							Don't have an account? <Text style={styles.bold}>Sign Up</Text>
+						</Text>
+					</TouchableOpacity>
+				</View>
+			</SafeAreaView>
+		);
+	}
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+	bold: {
+		fontWeight: '600'
+	},
+	container: {
+		flex: 1,
+		backgroundColor: '#FFFFFF'
+	},
+	button: {
+		width: 315,
+		height: 44,
+		borderWidth: 1,
+		borderColor: '#FFFFFF',
+		borderRadius: 8,
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginBottom: 15
+	},
+	buttonText: {
+		fontSize: 15,
+		color: '#FFFFFF',
+		fontWeight: '600'
+	},
+	background: {
+		width,
+		height: '100%'
+	},
+	backgroundContainer: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	backgroundImage: {
+		width: 139,
+		height: 220
+	},
+	signup: {
+		fontSize: 15,
+		color: '#1E2432',
+		fontWeight: '200'
+	},
+	footerContainer: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+	}
 });
